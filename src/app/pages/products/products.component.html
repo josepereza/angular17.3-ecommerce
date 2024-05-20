@@ -1,0 +1,19 @@
+
+
+
+
+ 
+
+  <div class="album py-5 bg-body-tertiary">
+    <div class="container">
+
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+          @for (product of products(); track product.id) {
+            <app-card [product]="product"   (addToCartEvent)="onAddToCart($event)"></app-card>
+         
+      }
+
+
+      </div>
+    </div>
+  </div>
