@@ -35,10 +35,8 @@ export class ProductsService {
   }
 
   public getProductById(id: number) {
-    return runInInjectionContext(this._injector, () =>
-      toSignal<Product>(
-        this._http.get<Product>(`${this._endPoint}/products/${id}`)
-      )
-    );
+    return  this._http.get<Product>(`${this._endPoint}/products/${id}`)
+     
+    
   }
 }

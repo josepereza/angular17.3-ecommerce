@@ -1,14 +1,23 @@
-import { CurrencyPipe } from '@angular/common';
-import { Component, OnInit, Signal, inject, input } from '@angular/core';
+import { CurrencyPipe, JsonPipe } from '@angular/common';
+import {
+  Component,
+  Injector,
+  OnInit,
+  Signal,
+  inject,
+  input,
+  signal,
+} from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { ProductsService } from '../../services/products.service';
-import { Product } from '../../interfaces/product'
+import { Product } from '../../interfaces/product';
+import { toSignal } from '@angular/core/rxjs-interop';
 //import { CartStore } from '@shared/store/shopping-cart.store';
 
 @Component({
   selector: 'app-details',
   standalone: true,
-  imports: [CurrencyPipe],
+  imports: [CurrencyPipe, JsonPipe],
   templateUrl: './details.component.html',
 })
 export default class DetailsComponent implements OnInit {
@@ -16,24 +25,41 @@ export default class DetailsComponent implements OnInit {
 
   // @Input({ alias: 'id' }) productId!: number;
   productId = input<number>(0, { alias: 'id' });
-  product!: Signal<Product | undefined>;
+ // product!: Signal<Product | undefined>;
+  product2 = signal<Product>({});
   //cartStore = inject(CartStore);
+   miproducto! : Signal<Product | undefined>;
+ 
+
 
   private readonly productsSvc = inject(ProductsService);
   private readonly _sanitizer = inject(DomSanitizer);
 
+
+constructor(private injector: Injector){
+  
+}
   ngOnInit(): void {
-    this.product = this.productsSvc.getProductById(this.productId());
+  //primera forma de hacerlo 
+         this.miproducto=toSignal(this.productsSvc.getProductById(this.productId()),{injector: this.injector});
+
+  //segunda forma de hacerlo
+    this.productsSvc
+      .getProductById(this.productId())
+      .subscribe((data: Product) => {
+        this.product2.set(data);
+      });
   }
 
   onAddToCart() {
-    //this.cartStore.addToCart(this.product() as Product);
+    //this.productsSvc.addToCart(this.product() as Product);
+    console.log(this.miproducto())
   }
 
   generateSVG(index: number): SafeHtml {
     let svgContent = null;
 
-    const rate = this.product()?.rating.rate as number;
+    const rate = this.product2().rating?.rate as number;
 
     if (index + 1 <= Math.floor(rate)) {
       svgContent = `<svg fill="currentColor" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"

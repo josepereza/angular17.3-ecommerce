@@ -1,12 +1,20 @@
 <p>details works!</p>
-{{ product()?.title }}
+{{miproducto() | json }}
+{{ product2().title }}
 
 <div class="d-flex mb-4">
-    <span class="flex items-center">
-      @for (star of starsArray; track index; let index = $index) {
-      <span [innerHTML]="generateSVG(index)"></span>
-      }
+  @if (starsArray) {
+   
+ <span class="flex items-center">
+    @for (star of starsArray; track index; let index = $index) {
+    <span [innerHTML]="generateSVG(index)"></span>
+    }
 
-      <span class="ml-3 text-gray-600"> {{product()?.rating?.count}} reviews</span>
-    </span>
-  </div>
+    <span class="ml-3 text-gray-600">
+      {{ product2().rating?.count }} reviews</span
+    >
+  </span>
+
+    }
+ 
+</div>
