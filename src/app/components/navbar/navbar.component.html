@@ -12,13 +12,20 @@
           <li class="nav-item">
             <a class="nav-link" href="#">Features</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" [routerLink]="['/products/cart']" routerLinkActive="router-link-active" >Carrito</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link disabled" aria-disabled="true">Disabled</a>
-          </li>
+                 
         </ul>
+        
       </div>
+      <a class="nav-link me-3 position-relative" [routerLink]="['/products/cart']" routerLinkActive="router-link-active">
+       
+          <i class="bi bi-cart fs-3"></i>
+          <span class="position-absolute mt-2 top-140 start-280 translate-middle badge rounded-pill bg-danger">
+         {{cartQuantity()}}
+        
+        </span>
+       
+       
+      </a>
+     
     </div>
   </nav>
