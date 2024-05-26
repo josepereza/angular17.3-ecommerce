@@ -1,0 +1,31 @@
+<div>
+    <h1>My Cart</h1>
+  
+    @if (cart.length === 0) {
+      <p>Your cart is empty.</p>
+    } @else {
+      <div class="cart-list">
+        @for (cartItem of cart; track cartItem) {
+         <!--  <mat-list-item class="cart-item">
+            <div matListItemTitle>{{ cartItem.product.name }} ({{ cartItem.quantity }})</div>
+            <div matListItemLine>{{ cartItem.product.price | currency }}</div>
+            <mat-icon matListItemIcon class="icon-button" (click)="removeFromCart(cartItem.product.id)">close</mat-icon>
+            <div matListItemIcon>
+              <mat-icon class="icon-button" color="primary" (click)="updateProductQuantity(cartItem.product.id, cartItem.quantity + 1)">add</mat-icon>
+              <mat-icon class="icon-button" color="primary" (click)="updateProductQuantity(cartItem.product.id, cartItem.quantity - 1)">remove</mat-icon>
+            </div>
+          </mat-list-item> -->
+
+          <div class="card">
+            <div class="card-body">
+             <span>{{cartItem.product.title}}  ({{ cartItem.quantity }})</span>
+            </div>
+          </div>
+        }
+      </div>
+      <div class="cart-total">
+        <div>Total: {{ cartTotal() | currency }}</div>
+        <button mat-raised-button color="primary">Checkout</button>
+      </div>
+    }
+  </div>
