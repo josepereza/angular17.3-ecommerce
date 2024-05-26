@@ -13,13 +13,13 @@ import { CartService } from 'app/services/cart.service';
 })
 export class CardComponent {
   constructor(private cartService: CartService) {}
-  @Input() product!: Product;
+  // @Input() product!: Product;
   quantity: number = 1;
-  // product = input.required<Product>();
+   product = input.required<Product>();
   public addToCartEvent = output<Product>();
 
   onAddToCart(): void {
-    this.cartService.addProductToCart(this.product, this.quantity);
+    this.cartService.addProductToCart(this.product(), this.quantity);
   }
 
   updateValue(event: KeyboardEvent) {
